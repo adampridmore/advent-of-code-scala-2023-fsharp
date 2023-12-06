@@ -1,5 +1,3 @@
-printfn "Hello"
-
 let line = "a1abc2"
 
 let ParseInt (str: string) : int option = 
@@ -29,7 +27,10 @@ let processLine(line:string) : int =
   
 line |> processLine
 
-System.IO.File.ReadAllLines("Day1.input.txt")
-|> Seq.map(processLine)
-|> Seq.sum
-// 54338
+let ans = 
+  System.IO.File.ReadAllLines("Day1.input.txt")
+  |> Seq.map(processLine)
+  |> Seq.sum
+  // 54338
+
+printfn "The answer is %d" ans
