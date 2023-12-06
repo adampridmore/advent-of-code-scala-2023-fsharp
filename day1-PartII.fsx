@@ -5,11 +5,10 @@ let ParseInt (str: string) : int option =
   | true, out -> Some out
   | false, _ -> None
 
-let Reverse( s : string) : string = 
-  let charArray = s.ToCharArray();
-  new string( charArray |> Array.rev)
+let Reverse(text : string) : string = 
+  new string(text.ToCharArray() |> Array.rev)
 
-let matchText = 
+let digitText = 
   seq{1..9}
   |> Seq.map(fun i -> (i.ToString(),i))
   |> Seq.append [
@@ -24,35 +23,36 @@ let matchText =
     "nine", 9;   
   ]
 
-let TryMatchText((matchText:  (string * int) seq ))(line: string) : Option<int> = 
-  matchText 
-  |> Seq.filter(fun (text, value) -> line.StartsWith(text))
+let TryMatchText((digitText: (string * int) seq ))(line: string) : Option<int> = 
+  digitText
+  |> Seq.filter(fun (text, _) -> line.StartsWith(text))
   |> Seq.map(snd)
   |> Seq.tryHead
 
-let rec FindDigit((matchText:  (string * int) seq ))(line: string) : int =
-  match line |> TryMatchText(matchText) with
+let rec FindDigit((digitText:  (string * int) seq ))(line: string) : int =
+  match line |> TryMatchText(digitText) with
   | Some(x) -> x
-  | None -> FindDigit(matchText)(line.Substring(1))
+  | None -> FindDigit(digitText)(line.Substring(1))
 
 let rec FirstDigit(line: string) : int =
-  FindDigit(matchText)(line)
+  FindDigit(digitText)(line)
 
 let LastDigit(line: string) : int =
   let reverseLine = new string(line.ToCharArray() |> Array.rev)
-  let matchTextReverse = 
-    matchText |> Seq.map(fun (text,value) -> (text |> Reverse, value) )
-  FindDigit(matchTextReverse)(reverseLine)
+  let digitTextReverse = 
+    digitText 
+    |> Seq.map(fun (text,value) -> (text |> Reverse, value))
+  FindDigit(digitTextReverse)(reverseLine)
 
-line |> FirstDigit
-line |> LastDigit
+// line |> FirstDigit
+// line |> LastDigit
 
 let processLine(line:string) : int =
   let firstDigit = line |> FirstDigit |> string
   let lastDigit = line |> LastDigit |> string
   ParseInt(firstDigit + lastDigit).Value
   
-line |> processLine
+// line |> processLine
 
 let ans = 
   System.IO.File.ReadAllLines("Day1.input.txt")
