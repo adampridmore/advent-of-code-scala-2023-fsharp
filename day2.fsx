@@ -9,19 +9,16 @@ let GetValue(x: Option<int>) : int = x.Value
 
 let ParseInt = TryParseInt >> GetValue
 
-// let GetRegexGroupInt (name: string) (matchResult: Match) : int = 
-//   result.Groups.[name].Value |> ParseInt
-
-type BeadScore={
+type BeadScore = {
   count : int;
   colour: string
 }
 
-type Reveal={
+type Reveal = {
   BeadScores: seq<BeadScore>;
 }
 
-type Game={
+type Game = {
   Index: int;
   Reveals: seq<Reveal>;
 }
@@ -88,11 +85,10 @@ let isBadGame(game: Game) : bool =
   |> Seq.exists(isBadReveal)
   
 
+// let line = "Game 12: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
 
-let line = "Game 12: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-
-let x = line |> parseLineToGame
-(x.Reveals |> Seq.head)
+// let x = line |> parseLineToGame
+// (x.Reveals |> Seq.head)
 
 
 let lines = """
@@ -103,9 +99,15 @@ Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 """
 
-lines.Split("\n")
+let realLines =
+  System.IO.File.ReadAllLines("Day2.input.txt")
+
+//lines.Split("\n")
+realLines
 |> Seq.filter(fun text -> (System.String.IsNullOrWhiteSpace(text) |> not))
 |> Seq.map(parseLineToGame)
 |> Seq.filter(fun line -> not (isBadGame(line)))
 |> Seq.map(fun game -> game.Index)
 |> Seq.sum
+
+// Total: 2348
