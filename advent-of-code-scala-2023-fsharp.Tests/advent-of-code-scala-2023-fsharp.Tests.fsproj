@@ -27,4 +27,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\advent-of-code-scala-2023-fsharp\advent-of-code-scala-2023-fsharp.fsproj" />
+  </ItemGroup>
+
 </Project>
