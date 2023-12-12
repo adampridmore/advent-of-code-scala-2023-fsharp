@@ -1,12 +1,11 @@
+#load "IntHelper.fs"
+#load "StringHelper.fs"
+open IntHelper
+open StringHelper
+
 let line = "abcone2threexyz"
 
-let ParseInt (str: string) : int option = 
-  match str |> System.Int32.TryParse with
-  | true, out -> Some out
-  | false, _ -> None
 
-let Reverse(text : string) : string = 
-  new string(text.ToCharArray() |> Array.rev)
 
 let digitText = 
   seq{1..9}
@@ -50,12 +49,12 @@ let LastDigit(line: string) : int =
 let processLine(line:string) : int =
   let firstDigit = line |> FirstDigit |> string
   let lastDigit = line |> LastDigit |> string
-  ParseInt(firstDigit + lastDigit).Value
+  ParseInt(firstDigit + lastDigit)
   
 // line |> processLine
 
 let ans = 
-  System.IO.File.ReadAllLines("Day1.input.txt")
+  System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day1.input.txt")
   |> Seq.map(processLine)
   |> Seq.sum
   // 53389
