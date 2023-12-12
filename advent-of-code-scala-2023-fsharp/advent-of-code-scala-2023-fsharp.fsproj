@@ -7,6 +7,7 @@
   <ItemGroup>
     <Compile Include="StringHelper.fs" />
     <Compile Include="IntHelper.fs" />
+    <Compile Include="Day2.fs" />
     <Compile Include="Library.fs" />
   </ItemGroup>
 </Project>
