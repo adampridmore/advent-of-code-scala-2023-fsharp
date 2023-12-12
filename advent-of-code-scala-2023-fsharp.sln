@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "advent-of-code-scala-2023-fsharp", "advent-of-code-scala-2023-fsharp\advent-of-code-scala-2023-fsharp.fsproj", "{EE295F95-E165-4940-BDB3-894805CD9804}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "advent-of-code-scala-2023-fsharp.Tests", "advent-of-code-scala-2023-fsharp.Tests\advent-of-code-scala-2023-fsharp.Tests.fsproj", "{BBA08E81-4952-4267-9874-D8A988C32E9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{EE295F95-E165-4940-BDB3-894805CD9804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE295F95-E165-4940-BDB3-894805CD9804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE295F95-E165-4940-BDB3-894805CD9804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA08E81-4952-4267-9874-D8A988C32E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA08E81-4952-4267-9874-D8A988C32E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA08E81-4952-4267-9874-D8A988C32E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA08E81-4952-4267-9874-D8A988C32E9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

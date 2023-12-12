@@ -1,13 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>advent_of_code_scala_2023_fsharp</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
+    <Compile Include="IntHelper.fs" />
     <Compile Include="Library.fs" />
   </ItemGroup>
-
 </Project>

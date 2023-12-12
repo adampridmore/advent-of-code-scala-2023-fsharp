@@ -1,11 +1,12 @@
 module Tests
 
 open System
+open FsUnit.Xunit
 open Xunit
 
 [<Fact>]
 let ``My test`` () =
-    Assert.True(true)
+    6 |> should equal 6
 
 [<Fact>]
 let test1() = 
