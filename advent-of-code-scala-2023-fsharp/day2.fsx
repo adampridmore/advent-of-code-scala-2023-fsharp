@@ -1,13 +1,9 @@
+#load "IntHelper.fs"
+#load "StringHelper.fs"
+open IntHelper
+open StringHelper
+
 open System.Text.RegularExpressions;
-
-let TryParseInt (str: string) : int option = 
-  match str.Trim() |> System.Int32.TryParse with
-  | true, out -> Some out
-  | false, _ -> None
-
-let GetValue(x: Option<int>) : int = x.Value
-
-let ParseInt = TryParseInt >> GetValue
 
 type BeadScore = {
   count : int;
@@ -100,7 +96,7 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 """
 
 let realLines =
-  System.IO.File.ReadAllLines("Day2.input.txt")
+  System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day2.input.txt")
 
 //lines.Split("\n")
 realLines

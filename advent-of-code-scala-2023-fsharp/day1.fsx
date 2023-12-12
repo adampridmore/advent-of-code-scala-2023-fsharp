@@ -1,5 +1,7 @@
 #load "IntHelper.fs"
+#load "StringHelper.fs"
 open IntHelper
+open StringHelper
 
 let line = "a1abc2"
 
@@ -12,8 +14,8 @@ let rec FirstDigit(line: string) : int =
   | Some(x) -> x
   | None -> FirstDigit(line.Substring(1))
 
-let LastDigit(line: string) : int =
-  let reverseLine = new string(line.ToCharArray() |> Array.rev)
+let LastDigit(line: string) : int = 
+  let reverseLine = line |> Reverse
   reverseLine |> FirstDigit
 
 line |> FirstDigit
