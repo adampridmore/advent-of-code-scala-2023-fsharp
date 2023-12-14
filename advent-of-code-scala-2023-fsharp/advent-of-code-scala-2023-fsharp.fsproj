@@ -9,5 +9,9 @@
     <Compile Include="IntHelper.fs" />
     <Compile Include="Day2.fs" />
     <Compile Include="Library.fs" />
+    <Compile Include="day1-PartI.fsx" />
+    <Compile Include="day1-PartII.fsx" />
+    <Compile Include="day2-PartI.fsx" />
+    <Compile Include="day2-PartII.fsx" />
   </ItemGroup>
 </Project>
