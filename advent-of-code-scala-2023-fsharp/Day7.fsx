@@ -8,19 +8,15 @@ let cardValues =
   |> dict
 
 type Hand(cards: string, bid: int) = 
-
   member this.cards = cards
   member this.bid = bid
   member this.score = 
-  
     let groupedCards = 
       cards.ToCharArray()
       |> Seq.groupBy(id)
       |> Seq.map(fun (_, v) -> v |> Seq.length)
       |> Seq.toList
       |> List.sortDescending
-
-    // printfn "groupedCards: %A" groupedCards
 
     match(groupedCards) with
     | [5] -> 7 // 5 of a kind
@@ -32,7 +28,6 @@ type Hand(cards: string, bid: int) =
     | _ -> 1
 
   override this.ToString():string = sprintf "Card: %s Score: %d Bid: %d" cards this.score bid
-
 
 let assertEquals(actualValue: obj, expectedValue: obj) : Unit = 
   if (actualValue.Equals(expectedValue)) then printfn "%A" actualValue
@@ -47,10 +42,14 @@ assertEquals(Hand("AA123", 1).score, 2)
 assertEquals(Hand("12345", 1).score, 1)
 
 let compareFirstCards(hand1:Hand)(hand2:Hand) : int = 
-  Seq.zip (hand1.cards.ToCharArray()) (hand2.cards.ToCharArray())
-  |> Seq.filter(fun (a,b) -> a <> b)
-  |> Seq.map(fun (a,b) ->  cardValues[a].CompareTo(cardValues[b]) )
-  |> Seq.head
+  let x = 
+    Seq.zip (hand1.cards.ToCharArray()) (hand2.cards.ToCharArray())
+    |> Seq.filter(fun (a,b) -> a <> b)
+    |> Seq.map(fun (a,b) ->  cardValues[a].CompareTo(cardValues[b]) )
+    |> Seq.tryHead
+  match x with
+  | Some(x) -> x
+  | None -> 0
 
 let handCompare (hand1:Hand)(hand2:Hand) : int = 
   let result = hand1.score.CompareTo(hand2.score)
@@ -74,9 +73,8 @@ let toTuple (array:array<'T>) : ('T * 'T) =
 System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day7.input.txt")
 |> Seq.filter(fun x -> x <> "" )
 |> Seq.map(fun line -> line.Split(" ") |> toTuple)
-|> Seq.map(fun (cards, bid) -> Hand(cards,System.Convert.ToInt32(bid)))
-|> Seq.toList
-|> List.sortWith handCompare
+|> Seq.map(fun (cards, bid) -> Hand(cards, System.Convert.ToInt32(bid)))
+|> Seq.sortWith handCompare
 |> Seq.indexed
 |> Seq.map(fun (index, hand) -> (index + 1) * hand.bid)
 |> Seq.sum
