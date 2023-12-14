@@ -5,8 +5,6 @@ open StringHelper
 
 let line = "abcone2threexyz"
 
-
-
 let digitText = 
   seq{1..9}
   |> Seq.map(fun i -> (i.ToString(),i))
