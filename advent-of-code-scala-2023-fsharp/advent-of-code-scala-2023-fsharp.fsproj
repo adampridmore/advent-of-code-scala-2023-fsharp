@@ -5,7 +5,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Day7.fsx" />
     <Compile Include="StringHelper.fs" />
     <Compile Include="IntHelper.fs" />
     <Compile Include="Day2.fs" />
@@ -15,5 +14,7 @@
     <Compile Include="day2-PartI.fsx" />
     <Compile Include="day2-PartII.fsx" />
     <Compile Include="Day6-Part-1.fsx" />
+    <Compile Include="Day7-Part-I.fsx" />
+    <Compile Include="Day7-Part-II.fsx" />
   </ItemGroup>
 </Project>
