@@ -5,6 +5,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Day3.fsx" />
     <Compile Include="StringHelper.fs" />
     <Compile Include="IntHelper.fs" />
     <Compile Include="Day2.fs" />
