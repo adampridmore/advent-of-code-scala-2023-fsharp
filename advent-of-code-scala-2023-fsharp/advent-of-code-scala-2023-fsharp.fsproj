@@ -14,6 +14,8 @@
     <Compile Include="day1-PartII.fsx" />
     <Compile Include="day2-PartI.fsx" />
     <Compile Include="day2-PartII.fsx" />
+    <Compile Include="Day3-Part-1.fsx" />
+    <Compile Include="Day3-Part-2.fsx" />
     <Compile Include="Day6-Part-1.fsx" />
     <Compile Include="Day7-Part-I.fsx" />
     <Compile Include="Day7-Part-II.fsx" />
