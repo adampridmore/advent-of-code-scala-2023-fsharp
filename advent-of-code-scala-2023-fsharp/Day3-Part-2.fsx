@@ -12,12 +12,6 @@ let exampleData = """
 ...$.*....
 .664.598..""" 
 
-// let exampleData = """
-// 467..114..
-// ...*......
-// ..35..633.
-// """ 
-
 let regex = Regex "([0-9]+)"
 
 type Number = {
@@ -30,7 +24,6 @@ type Number = {
 let getNumbers(rowIndex: int, line: string) : seq<Number> =
   let result = regex.Matches(line)
   result
-  // |> Seq.map(fun m -> System.Convert.ToInt32(m.Value), m.Index, m.Value.Length)
   |> Seq.map(fun m -> {
       value = System.Convert.ToInt32(m.Value);
       columnIndex = m.Index;
@@ -38,7 +31,6 @@ let getNumbers(rowIndex: int, line: string) : seq<Number> =
       characterLength = m.Value.Length
       }
     )
-
 
 let lines = 
   System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day3.input.txt")
