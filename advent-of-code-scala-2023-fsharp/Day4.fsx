@@ -10,7 +10,11 @@ Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
 Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 """)
 
-let lines = exampleText.Split("\n", StringSplitOptions.RemoveEmptyEntries)
+let lines =
+  // exampleText.Split("\n", StringSplitOptions.RemoveEmptyEntries)
+  // exampleData.Split("\n")
+  System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day4.input.txt")
+  |> Seq.filter(fun line -> line <> "")
 
 type Card = {
   index: int;
@@ -22,8 +26,10 @@ let parseNumbers(text: String) : seq<int> =
   text.Split(" ", StringSplitOptions.RemoveEmptyEntries)
   |> Seq.map(System.Convert.ToInt32)
 
-let regex = Regex "Card ([0-9]+)"
+let regex = Regex "Card\s+([0-9]+)"
+
 let parseLineToCard(line: string) : Card  = 
+  printfn "line: %s" line
   let lineParts = line.Split(":")
   let cardText = lineParts.[0]
   let scoreingText = lineParts.[1].Split("|")
@@ -53,6 +59,7 @@ pow 2 4
 
 lines
 |> Seq.map parseLineToCard
+|> Seq.map(fun x -> printfn "%A" x; x)
 |> Seq.map countWinningNumbers
 |> Seq.map (fun count -> pow 2 (count - 1))
 |> Seq.sum
