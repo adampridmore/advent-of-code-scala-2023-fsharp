@@ -18,9 +18,6 @@ let lines =
 
 type Card(index: int, winningNumbers: seq<int>, yourNumbers : seq<int>) =
   member this.index = index
-  member this.winningNumbers = winningNumbers |> Seq.toList
-  member this.yourNumbers = yourNumbers |> Seq.toList
-
   member this.winCount = 
     yourNumbers
     |> Seq.filter(fun yourNumber -> winningNumbers |> Seq.exists(fun wn -> yourNumber = wn))
@@ -50,13 +47,6 @@ let parseLineToCard(line: string) : Card  =
 
   Card(cardIndex, winningNumbers, yourNumbers)
 
-let pow(x: int)(y: int) : int = (x |> float) ** (y |> float) |> int32
-
-pow 2 4
-
-let min(x: int, y: int) : int = 
-  if (x<y) then x else y
-
 let cardScores = 
   lines
   |> Seq.map parseLineToCard
@@ -64,18 +54,19 @@ let cardScores =
   |> Seq.toList
 
 
-let cards = new System.Collections.Generic.Dictionary<int,int>()
+let cardsWithCount = new System.Collections.Generic.Dictionary<int,int>()
 
 cardScores
-|> Seq.iter(fun card -> cards.Add(card.index, 1))
+|> Seq.iter(fun card -> cardsWithCount.Add(card.index, 1))
 
 cardScores 
 |> Seq.iter(fun card -> 
-    let numberOfCurrentCards = cards.[card.index];
+    let numberOfCurrentCards = cardsWithCount.[card.index];
 
-    seq{card.index+1..(card.index+card.winCount)}
-    |> Seq.iter(fun i -> cards.[i] <- cards.[i] + numberOfCurrentCards)
+    seq{card.index + 1 .. (card.index+card.winCount)}
+    |> Seq.iter(fun index -> cardsWithCount.[index] <- cardsWithCount.[index] + numberOfCurrentCards)
     ()
   )
 
-cards.Values |> Seq.sum
+cardsWithCount.Values
+|> Seq.sum
