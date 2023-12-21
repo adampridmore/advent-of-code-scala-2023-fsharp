@@ -1,17 +1,6 @@
-
-
 let example = """0 3 6 9 12 15
 1 3 6 10 15 21
 10 13 16 21 30 45"""
-
-//let line = "0 3 6 9 12 15"
-// let line = "1 3 6 10 15 21"
-let line = "10 13 16 21 30 45"
-
-// numbers 
-// |> Seq.pairwise 
-// |> Seq.map(fun (a, b) ->(b-a))
-// |> Seq.toList
 
 let all( predicate : 'T -> bool) (s : seq<'T>) : bool =
   s
@@ -19,7 +8,6 @@ let all( predicate : 'T -> bool) (s : seq<'T>) : bool =
   |> Seq.isEmpty
 
 let getRows(numbers: list<int>) : list<list<int>> = 
-
   let nextRow(row : list<int32>) : Option<list<int32>*list<int32>> = 
     if (row |> all (fun x -> x = 0)) then None
     else 
@@ -48,8 +36,7 @@ let calculateNextValue(line:list<int>) : int =
   |> Seq.map(fun numbers -> Seq.last(numbers))
   |> Seq.sum
 
-
-example.Split("\n")
+System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day9.input.txt")
 |> Seq.map toIntList
 |> Seq.map calculateNextValue
 |> Seq.sum
