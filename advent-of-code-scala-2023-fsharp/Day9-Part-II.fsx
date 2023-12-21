@@ -24,7 +24,6 @@ let getRows(numbers: list<int>) : list<list<int>> =
     |> List.unfold nextRow 
     
   (numbers |> Seq.toList)::tail
-
 let toIntList(line: string) : list<int> = 
   line.Split(" ")
   |> Seq.map System.Convert.ToInt32
@@ -46,16 +45,3 @@ System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day9.input.txt")
 |> Seq.map toIntList
 |> Seq.map calculateNextValue
 |> Seq.sum
-
-// let example = """0 3 6 9 12 15
-// 1 3 6 10 15 21
-// 10 13 16 21 30 45"""
-// let lines = example.Split("\n")|>Seq.toList
-// let line1 = lines[0] 
-// let line2 = lines[1] 
-// let line3 = lines[2] 
-
-// // "10 13 16 21 30 45" 
-// line2
-// |> toIntList
-// |> calculateNextValue
