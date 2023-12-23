@@ -138,22 +138,29 @@ let startCell =
   |> Array.collect(id)
   |> Seq.find(fun (c:Cell) -> c.pipeType = Start())
 
+let isOutsideArray (array : array<'T>)(i: int) : bool =  (i < 0) || (i >= array.Length)
+
+let getFromArray(array : array<'T>)(i: int) : Option<'T> =
+  if isOutsideArray(array)(i) then None
+  else Some(array[i])
+
+let getOrElse(elseValue: 'T)(x: Option<'T>) : 'T = 
+  match (x) with
+  | Some(x) -> x
+  | None -> elseValue
+
 let getCell(columnIndex:int<ColumnIndex>)(rowIndex:int<RowIndex>) (cells: array<array<Cell>>): Cell =
-  if (
-      (rowIndex < 0<RowIndex>) || ( rowIndex >= (cells.Length * 1<RowIndex>))
-      || 
-      ((columnIndex < 0<ColumnIndex>) || (columnIndex >=  (cells[0].Length * 1<ColumnIndex> )))
-    )
-  then 
-    {
+  let missing = {
         Cell.pipeType = Missing();
         location = {
             Coord.rowIndex = rowIndex;
             columnIndex = columnIndex;
           }
-    }
-  else cells[rowIndex |> int][columnIndex |> int]
+      }
 
+  match (getFromArray(cells)(int rowIndex)) with
+  | Some(row) -> getFromArray(row)(int columnIndex) |> getOrElse(missing)
+  | None -> missing
 
 let getNextCells(cell: Cell) :seq<Cell> = 
   let topCell = cells |> getCell cell.location.columnIndex (cell.location.rowIndex - 1<RowIndex>) 
@@ -198,4 +205,4 @@ let length =
   |> ( (+) 1) // As the list doesn't contain the start cell
   
 let ans = length / 2
-
+// Ans 6846
