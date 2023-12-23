@@ -164,22 +164,21 @@ let getCell(columnIndex:int<ColumnIndex>)(rowIndex:int<RowIndex>) (cells: array<
 
 let getNextCells(cell: Cell) :seq<Cell> = 
   let topCell = cells |> getCell cell.location.columnIndex (cell.location.rowIndex - 1<RowIndex>) 
-  let bottomCell = cells |> getCell cell.location.columnIndex (cell.location.rowIndex + 1<RowIndex>)
-  let leftCell = cells |> getCell (cell.location.columnIndex - 1<ColumnIndex>) (cell.location.rowIndex)
-  let rightCell = cells |> getCell (cell.location.columnIndex + 1<ColumnIndex>) (cell.location.rowIndex)
-  
   let first = 
     if (cell.pipeType.top() && topCell.pipeType.bottom()) then [topCell]
     else []
 
+  let bottomCell = cells |> getCell cell.location.columnIndex (cell.location.rowIndex + 1<RowIndex>)
   let second = 
     if (cell.pipeType.bottom() && bottomCell.pipeType.top()) then [bottomCell]
     else []
 
+  let leftCell = cells |> getCell (cell.location.columnIndex - 1<ColumnIndex>) (cell.location.rowIndex)
   let third = 
     if (cell.pipeType.left() && leftCell.pipeType.right()) then [leftCell]
     else []
 
+  let rightCell = cells |> getCell (cell.location.columnIndex + 1<ColumnIndex>) (cell.location.rowIndex)
   let forth = 
     if (cell.pipeType.right() && rightCell.pipeType.left()) then [rightCell]
     else []
@@ -200,7 +199,7 @@ let state : Cell*Cell = startCell , secondCell
 let length = 
   Seq.unfold getNextCell state
   |> Seq.indexed
-  |> Seq.map (fun (i, x:Cell) -> x.Print(i.ToString());x)
+  // |> Seq.map (fun (i, x:Cell) -> x.Print(i.ToString());x)
   |> Seq.length
   |> ( (+) 1) // As the list doesn't contain the start cell
   
