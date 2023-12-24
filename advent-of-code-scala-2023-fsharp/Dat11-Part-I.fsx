@@ -12,6 +12,7 @@ let example = """...#......
 type Cell =
   | E
   | G of x : int * y : int 
+
 let parseCell(y:int)(x: int, c: char) : Cell = 
   match c with
   | '.' -> E
@@ -55,3 +56,55 @@ let getExpandRows(cells: array<array<Cell>>) : seq<int> =
 
 let expandColumns = cells |> getExpandColumns
 let expandRows = cells |> getExpandRows
+
+let filterGalaxies(calls: array<array<Cell>>) : seq<Cell> = 
+  seq {
+    for row in cells do
+      for cell in row do
+        yield cell
+  }
+  |> Seq.filter(isGalaxy)
+  |> Seq.choose(fun x ->
+        match x with 
+        | G(_) as g -> Some g
+        | _ -> None
+      )
+
+let getShiftPos(doX: bool)(expanders:seq<int>)(galaxy: Cell) : int = 
+  match (doX, galaxy) with
+  | false, G(_,y) -> (expanders |> Seq.filter(fun i -> i < y) |> Seq.length) + y
+  | true, G(x,_) -> (expanders |> Seq.filter(fun i -> i < x) |> Seq.length) + x
+
+let shiftGalaxy(galaxy: Cell) : Cell = 
+  let newX = galaxy |> getShiftPos(true)(expandColumns)
+  let newY = galaxy |> getShiftPos(false)(expandRows)
+  G(newX, newY)
+
+let shiftedGalaxies = 
+  cells
+  |> filterGalaxies
+  |> Seq.map shiftGalaxy
+  |> Seq.toList
+
+let abs(x: int) : int = 
+  if (x >= 0) then x
+  else -x
+
+let distance(g1 : Cell,g2: Cell) : int = 
+  match(g1, g2) with
+  | G(x1, y1), G(x2, y2) -> abs(x2-x1) + abs(y2-y1)
+
+let rec comb n l =
+  match (n,l) with
+  | (0,_) -> [[]]
+  | (_,[]) -> []
+  | (n,x::xs) ->
+      let useX = List.map (fun l -> x::l) (comb (n-1) xs)
+      let noX = comb n xs
+      useX @ noX
+
+shiftedGalaxies 
+|> comb 2
+|> Seq.map(fun list -> (list[0], list[1]) )
+|> Seq.map(distance)
+|> Seq.sum
