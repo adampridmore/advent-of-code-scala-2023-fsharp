@@ -26,6 +26,7 @@ let parseLine(y: int, text: string) : array<Cell> =
 
 let cells = 
   example.Split('\n')
+  // System.IO.File.ReadAllLines("./advent-of-code-scala-2023-fsharp/Day11.input.txt")
   |> Seq.indexed
   |> Seq.map(parseLine)
   |> Seq.toArray
@@ -71,9 +72,11 @@ let filterGalaxies(calls: array<array<Cell>>) : seq<Cell> =
       )
 
 let getShiftPos(doX: bool)(expanders:seq<int>)(galaxy: Cell) : int = 
+  // let multiplier = 10000000 - 1
+  let multiplier = 100 - 1
   match (doX, galaxy) with
-  | false, G(_,y) -> (expanders |> Seq.filter(fun i -> i < y) |> Seq.length) + y
-  | true, G(x,_) -> (expanders |> Seq.filter(fun i -> i < x) |> Seq.length) + x
+  | false, G(_,y) -> (  (expanders |> Seq.filter(fun i -> i < y) |> Seq.length) * multiplier + y)
+  | true, G(x,_) ->  (  (expanders |> Seq.filter(fun i -> i < x) |> Seq.length) * multiplier + x)
 
 let shiftGalaxy(galaxy: Cell) : Cell = 
   let newX = galaxy |> getShiftPos(true)(expandColumns)
@@ -94,17 +97,18 @@ let distance(g1 : Cell,g2: Cell) : int =
   match(g1, g2) with
   | G(x1, y1), G(x2, y2) -> abs(x2-x1) + abs(y2-y1)
 
-let rec comb n l =
+let rec combinations n l =
   match (n,l) with
   | (0,_) -> [[]]
   | (_,[]) -> []
   | (n,x::xs) ->
-      let useX = List.map (fun l -> x::l) (comb (n-1) xs)
-      let noX = comb n xs
+      let useX = List.map (fun l -> x::l) (combinations (n-1) xs)
+      let noX = combinations n xs
       useX @ noX
 
 shiftedGalaxies 
-|> comb 2
+|> combinations 2
+// |> Seq.length
 |> Seq.map(fun list -> (list[0], list[1]) )
 |> Seq.map(distance)
 |> Seq.sum
